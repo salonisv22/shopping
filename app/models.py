@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator,MinValueValidator
 from django.db.models.fields.related import ForeignKey
 
+
 STATE_CHOICES= (('Delhi','Delhi'),('Mumbai','Mumbai'),('Other','Other'))
 
 class Customer(models.Model):
@@ -40,6 +41,10 @@ class Cart(models.Model):
     def __str__(self):
         return str(self.id)
 
+    @property
+    def total_cost(self):
+        return self.quantity * self.product.discounted_price
+
 STATE_CHOICES = (
     ('Accepted','Accepted'),
     ('Packed','Packed'),
@@ -56,6 +61,8 @@ class OrderPlaced(models.Model):
     ordered_date=models.DateTimeField(auto_now_add=True)
     status=models.CharField(max_length=50,choices=STATE_CHOICES,default='Pending')
 
-
+    @property
+    def total_cost(self):
+        return self.quantity * self.product.discounted_price
 
 
