@@ -1,1 +1,1 @@
-web: gunicorn mac.wsgi --log-file -shop-daily
+web: gunicorn shop.wsgi --log-file -
